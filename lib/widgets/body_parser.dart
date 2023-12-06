@@ -6,7 +6,8 @@ List<Widget> _getCriteriaBody(Criteria criteria) {
       List<Widget> plainText = [];
       for (Map<String, dynamic> criteriaData in criteria) {
         plainText.add(
-          Wrap(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -18,6 +19,18 @@ List<Widget> _getCriteriaBody(Criteria criteria) {
                   ),
                 ),
               ),
+              if (criteria.last != criteriaData)
+                const Padding(
+                  padding: EdgeInsets.only(left: 8.0),
+                  child: Text(
+                    "and\n",
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                    ),
+                  ),
+                ),
             ],
           ),
         );
@@ -26,7 +39,28 @@ List<Widget> _getCriteriaBody(Criteria criteria) {
     case "variable":
       List<Widget> variable = [];
       for (Map<String, dynamic> criteriaData in criteria) {
-        variable.add(CriteriaWidget(criteria: criteriaData));
+        Widget x = CriteriaWidget(criteria: criteriaData);
+
+        variable.add(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              x,
+              if (criteria.last != criteriaData)
+                const Padding(
+                  padding: EdgeInsets.only(left: 8.0),
+                  child: Text(
+                    "and\n",
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        );
       }
       return variable;
     default:
