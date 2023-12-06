@@ -19,16 +19,25 @@ class Details extends StatelessWidget {
       case "indicator":
         return Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Row(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(child: Text(data['parameter_name'])),
-              Expanded(
-                  flex: 2,
-                  child: TextField(
-                    controller: TextEditingController(
-                        text: data['default_value'].toString()),
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  )),
+              Text(data['study_type'].toString().toUpperCase()),
+              const Text("Set Parameters"),
+              Row(
+                children: [
+                  Expanded(child: Text(data['parameter_name'])),
+                  Expanded(
+                      flex: 2,
+                      child: TextField(
+                        controller: TextEditingController(
+                            text: data['default_value'].toString()),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                      )),
+                ],
+              ),
             ],
           ),
         );
