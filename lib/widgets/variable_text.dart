@@ -31,10 +31,26 @@ class CriteriaWidget extends StatelessWidget {
       textSpans.add(TextSpan(text: text.substring(startIndex, match.start)));
 
       final String variableName = match.group(0)!;
+      final dynamic variableValue = variables[variableName];
+
+      String replacementText;
+
+      if (variableValue != null &&
+          variableValue['type'] == 'value' &&
+          variableValue['values'] is List) {
+        replacementText = variableValue['values'].isNotEmpty
+            ? "(${variableValue['values'][0]})"
+            : variableName;
+      } else if (variableValue != null &&
+          variableValue['type'] == 'indicator') {
+        replacementText = "(${variableValue['default_value']})";
+      } else {
+        replacementText = variableName;
+      }
 
       textSpans.add(
         TextSpan(
-          text: variableName,
+          text: replacementText,
           style: const TextStyle(
             color: Colors.blue,
             decoration: TextDecoration.underline,
